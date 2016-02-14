@@ -25,8 +25,11 @@ static int const YEAR = (DAY * 365);
     NSInteger prefix = 0;
     NSString *suffix = nil;
     
+    if (secondsSinceNow < 5) {
+        suffix = @"Just now";
+    }
     // Seconds
-    if (secondsSinceNow < MINUTE) {
+    else if (secondsSinceNow < MINUTE) {
         prefix = secondsSinceNow;
         suffix = @"s";
     }
@@ -60,8 +63,12 @@ static int const YEAR = (DAY * 365);
         prefix = secondsSinceNow / YEAR;
         suffix = @"y";
     }
-
-    return [NSString stringWithFormat:@"%d%@", prefix, suffix];
+    
+    if (prefix) {
+        return [NSString stringWithFormat:@"%ld%@", (long)prefix, suffix];
+    } else {
+        return suffix;
+    }
 }
 
 @end
